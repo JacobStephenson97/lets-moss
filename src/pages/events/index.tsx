@@ -7,7 +7,7 @@ export default function Events() {
   const [startDate, setStartDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [endDate, setEndDate] = useState("YYYY-MM-DD");
+  const [endDate, setEndDate] = useState("yyyy-MM-dd");
   const [title, setTitle] = useState("");
 
   const router = useRouter();
@@ -30,20 +30,20 @@ export default function Events() {
   };
 
   return (
-    <div className="m-auto my-auto flex w-4/12 flex-col justify-center">
+    <div className="m-auto my-auto flex w-10/12 flex-col justify-center sm:w-8/12 md:w-4/12">
       <div className="mt-4">
         <div className="flex flex-col justify-center">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border-1 rounded-md border border-white bg-transparent text-center text-2xl text-white focus:outline-none"
+            className="border-1 rounded-md border border-white bg-transparent text-center text-lg text-white focus:outline-none md:text-2xl"
             type="text"
             placeholder="Event Name"
           />
         </div>
       </div>
       <div className="flex justify-between">
-        <div className="py-2">
+        <div className="flex flex-col py-2 md:flex-row">
           <label htmlFor="start-date" className="mr-2 text-white">
             Start Date
           </label>
@@ -54,7 +54,7 @@ export default function Events() {
             id="start-date"
           />
         </div>
-        <div className="py-2">
+        <div className="flex flex-col py-2 md:flex-row">
           <label htmlFor="end-date" className="mr-2 text-white">
             End Date
           </label>
