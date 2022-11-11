@@ -1,25 +1,28 @@
-import { start } from "repl";
 import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
 
 export const eventRouter = router({
-  hello: publicProcedure
-    .input(z.object({ text: z.string().nullish() }).nullish())
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input?.text ?? "world"}`,
-      };
+  getEvent: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(({ input, ctx }) => {
+      return ctx.prisma.event.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
   eventCreate: publicProcedure
     .input(
       z.object({
         title: z.string(),
         startDate: z.string(),
         endDate: z.string(),
+        description: z.string().nullish(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -31,6 +34,7 @@ export const eventRouter = router({
           startDate: startDate,
           title: input.title,
           location: "todo",
+          description: input.description,
         },
       });
     }),

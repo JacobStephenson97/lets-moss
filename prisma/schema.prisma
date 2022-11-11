@@ -71,6 +71,7 @@ model Event {
   updatedAt DateTime @updatedAt
   title     String
   startDate DateTime
-  endDate   DateTime
+  endDate   DateTime 
   location  String
+  description String? 
 }
