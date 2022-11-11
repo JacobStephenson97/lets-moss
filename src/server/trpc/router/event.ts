@@ -1,4 +1,3 @@
-import { start } from "repl";
 import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
@@ -23,6 +22,7 @@ export const eventRouter = router({
         title: z.string(),
         startDate: z.string(),
         endDate: z.string(),
+        description: z.string().nullish(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -34,6 +34,7 @@ export const eventRouter = router({
           startDate: startDate,
           title: input.title,
           location: "todo",
+          description: input.description,
         },
       });
     }),
