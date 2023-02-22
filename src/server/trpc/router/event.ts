@@ -6,13 +6,26 @@ export const eventRouter = router({
   getEvent: publicProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.string().nullish(),
       })
     )
     .query(({ input, ctx }) => {
+      if (!input.id) {
+        return;
+      }
+
       return ctx.prisma.event.findUnique({
         where: {
           id: input.id,
+        },
+        include: {
+          Day: {
+            include: {
+              breakfast: true,
+              lunch: true,
+              dinner: true,
+            },
+          },
         },
       });
     }),

@@ -66,12 +66,47 @@ model VerificationToken {
 }
 
 model Event {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  startDate   DateTime
+  endDate     DateTime
+  location    String
+  description String?
+  Day         Day[]
+}
+
+model Day {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  date        DateTime
+  event       Event    @relation(fields: [eventId], references: [id])
+  eventId     String
+  breakfast   Meal?    @relation("breakfast", fields: [breakfastId], references: [id])
+  breakfastId String?
+  lunch       Meal?    @relation("lunch", fields: [lunchId], references: [id])
+  lunchId     String?
+  dinner      Meal?    @relation("dinner", fields: [dinnerId], references: [id])
+  dinnerId    String?
+}
+
+model Meal {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  startDate DateTime
-  endDate   DateTime 
-  location  String
-  description String? 
+  type      MealType
+  name      String
+  breakfast Day[]    @relation("breakfast")
+  lunch     Day[]    @relation("lunch")
+  dinner    Day[]    @relation("dinner")
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+  OTHER
 }

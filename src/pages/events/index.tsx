@@ -46,7 +46,7 @@ export default function Events() {
       errorObj.title = "Title is required";
     }
     if (isNaN(new Date(endDate).getTime())) {
-      errorObj.endDate = "Start date is required";
+      errorObj.endDate = "End date is required";
     }
     if (new Date(endDate) < new Date(startDate)) {
       errorObj.endDate = "End date must be after start date";
